@@ -47,7 +47,7 @@ class Client(object):
         for listener in self.listeners:
             self._send(listener, msg)
 
-    def notify_on(self, msg, transformer=lambda _: _, unpack=False):
+    def monitor(self, msg, transformer=lambda _: _, unpack=False):
         def decorator(fn):
             @wraps(fn)
             def wrapper(*args, **kw):
