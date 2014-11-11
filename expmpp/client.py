@@ -51,14 +51,15 @@ class Client(object):
         def decorator(fn):
             @wraps(fn)
             def wrapper(*args, **kw):
-                results = transformer(fn(*args, **kw))
+                results = fn(*args, **kw)
+                transformed = transformer(results)
                 if unpack:
                     if isinstance(results, dict):
-                        self.notify(msg.format(**results))
+                        self.notify(msg.format(**transformed))
                     else:
-                        self.notify(msg.format(*results))
+                        self.notify(msg.format(*transformed))
                 else:
-                    self.notify(msg.format(results))
+                    self.notify(msg.format(transformed))
                 return results
             return wrapper
         return decorator
