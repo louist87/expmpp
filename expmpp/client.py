@@ -25,7 +25,7 @@ class Client(object):
         client.sendInitPresence()
         self._visible = True
 
-        self.listeners = listeners
+        self.listeners = set(listeners)
 
     def __del__(self):
         self.client.disconnect()
@@ -39,6 +39,12 @@ class Client(object):
         for listener in self.listeners:
             self.client.sendPresence(listener, True)
         self._visible = val
+
+    def addListener(self, listener):
+        self.listeners.add(listener)
+
+    def removeListener(self, listener):
+        self.listeners.remove(listener)
 
     def _send(self, to, msg):
         self.client.send(xmpp.protocol.Message(to, msg))
