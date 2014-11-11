@@ -24,24 +24,36 @@ class Client(object):
     listeners : iterable of str
         Jabber IDs (JIDs) that should receive notifications
         [Default: ()]
+
+    connect : bool
+        If True, connect upon initialization, else an explicit call to
+        Client.connect will be required.
     """
 
-    def __init__(self, jid, pwd, listeners=()):
-        self.jid = jid = xmpp.protocol.JID(jid)
-        self.client = client = xmpp.Client(jid.getDomain(), debug=())
-        if not client.connect():
-            raise NetworkError('could not connect')
+    def __init__(self, jid, pwd, listeners=(), connect=True):
+        self.jid = xmpp.protocol.JID(jid)
+        self.pwd = pwd
+        self.client = xmpp.Client(self.jid.getDomain(), debug=())
 
-        if not client.auth(jid.getNode(), pwd, resource=jid.getResource()):
-            raise AuthenticationError('could not authenticate user')
-
-        client.sendInitPresence()
-        self._visible = True
+        if connect:
+            self.connect()
 
         self.listeners = set(listeners)
 
     def __del__(self):
         self.client.disconnect()
+
+    def connect(self):
+        if not self.client.connect():
+            raise NetworkError('could not connect')
+
+        if not self.client.auth(self.jid.getNode(),
+                                self.pwd,
+                                resource=self.jid.getResource()):
+            raise AuthenticationError('could not authenticate user')
+
+        self.client.sendInitPresence()
+        self._visible = True
 
     @property
     def visible(self):
