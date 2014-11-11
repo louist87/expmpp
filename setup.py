@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='eXpMPP',
-    version='1.0.1',
+    version='1.0.2',
     author='Louis Thibault',
     author_email='louist87@gmail.com',
     packages=['expmpp'],
