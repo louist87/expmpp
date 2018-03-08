@@ -6,11 +6,11 @@ XMPP notifications for psychology experiments
 Installation
 ======
 
-##With pip (recommended)
+## With pip (recommended)
 
 The latest stable binaries are available via pip.  Simply run `pip install expmpp --user`
 
-##From github
+## From github
 
 1. `git clone https://github.com/louist87/expmpp.git`
 2. `cd expmpp`
@@ -19,7 +19,7 @@ The latest stable binaries are available via pip.  Simply run `pip install expmp
 Usage
 ======
 
-##Setting up a client
+## Setting up a client
 
 In order to begin receiving notifications, we must first initialize a client.
 This should be done **exactly once** in your application and the resultant `Client` instance can then be imported by various submodules.
@@ -31,7 +31,7 @@ my_listeners = ['mylistener@domain.com']  # ID of the account being notified
 client = Client('myuser@domain.com', 'mypassword', listeners=my_listeners)
 ```
 
-##Sending notifications
+## Sending notifications
 
 Once you've initialized your client, you can begin sending arbitrary notifications.
 
@@ -39,7 +39,7 @@ Once you've initialized your client, you can begin sending arbitrary notificatio
 client.notify('This is a test.')
 ```
 
-##Monitoring functions
+## Monitoring functions
 
 Sometimes it is useful to be notified when a specific function returns.  A common use-case is to send a notificaiton to the experimentor when the function responsible for running an experimental block has completed.  This use-case motivates the following example:
 
@@ -84,7 +84,7 @@ def run_block():
 
 The above example is expected to return a string similar to the one in the preceding example.
 
-###Transforming output for notification
+### Transforming output for notification
 
 On occasion, a function will return a value that is either non-human-readable or whose default formatting is sinfully ugly.  For these cases, a function can be passed to the `transformer` keyword argument, which allows a developer to transform the output before notification.  Note that the `transformer` parameter does **not** change the function's final return value; it only changes what gets sent over the wire.
 
